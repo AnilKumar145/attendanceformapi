@@ -8,14 +8,13 @@ services:
       - key: PYTHON_VERSION
         value: 3.9.0
       - key: DATABASE_URL
-        fromDatabase:
-          name: attendance_db
-          property: connectionString
+        value: postgresql://postgress:Db70pCsQp7kDPOCS8ss4fBZeWl0qbeDC@dpg-d00dlu7gi27c73b6838g-a/attendance_db_zuoo
 
 databases:
   - name: attendance_db
-    databaseName: attendance_db
+    databaseName: attendance_db_zuoo
     plan: free
+
 
 
 
