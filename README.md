@@ -18,12 +18,15 @@ pip install -r requirements.txt
 
 3. Create `.env` file:
 ```
-GOOGLE_CREDENTIALS_FILE=path/to/credentials.json
-SPREADSHEET_ID=your_spreadsheet_id
-WORKSHEET_NAME=your_worksheet_name
+DATABASE_URL=postgresql+asyncpg://postgres:Anil@localhost/attendance_db
 ```
 
-4. Run development server:
+4. Initialize database:
+```bash
+alembic upgrade head
+```
+
+5. Run development server:
 ```bash
 uvicorn app.main:app --reload
 ```
