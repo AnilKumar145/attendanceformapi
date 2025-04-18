@@ -2,7 +2,7 @@ services:
   - type: web
     name: qr-attendance-api
     env: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: chmod +x build.sh && ./build.sh
     startCommand: gunicorn app.main:app -c gunicorn_config.py
     envVars:
       - key: PYTHON_VERSION
@@ -16,5 +16,6 @@ databases:
   - name: attendance_db
     databaseName: attendance_db
     plan: free
+
 
 
