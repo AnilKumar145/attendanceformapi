@@ -23,7 +23,10 @@ if config.config_file_name is not None:
 target_metadata = [AttendanceBase.metadata, SessionBase.metadata]
 
 def run_migrations_offline() -> None:
-    url = config.get_main_option("sqlalchemy.url")
+    url = os.getenv("DATABASE_URL")
+    if url.startswith("postgres://"):
+        url = url.replace("postgres://", "postgresql://", 1)
+    
     context.configure(
         url=url,
         target_metadata=target_metadata,
@@ -36,9 +39,12 @@ def run_migrations_offline() -> None:
 
 def run_migrations_online() -> None:
     configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = os.getenv(
-        "DATABASE_URL", "postgresql://postgres:Anil@localhost/attendance_db"
-    )
+    url = os.getenv("DATABASE_URL")
+    if url.startswith("postgres://"):
+        url = url.replace("postgres://", "postgresql://", 1)
+    
+    configuration["sqlalchemy.url"] = url
+
     connectable = engine_from_config(
         configuration,
         prefix="sqlalchemy.",
@@ -58,5 +64,6 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
+
 
 

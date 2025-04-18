@@ -3,7 +3,10 @@ from sqlalchemy.orm import sessionmaker
 import os
 
 # Get the DATABASE_URL from environment
-DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql+asyncpg://postgres:Anil@localhost/attendance_db')
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set")
 
 # Convert database URL if needed
 if DATABASE_URL.startswith('postgres://'):
@@ -20,4 +23,5 @@ async def get_db():
             yield session
         finally:
             await session.close()
+
 
